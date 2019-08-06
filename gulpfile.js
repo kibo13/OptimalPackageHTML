@@ -1,6 +1,7 @@
 var gulp          = require('gulp'),
     sass          = require('gulp-sass'),           // *gulp-sass (для транспиляции sass -> css)
     browserSync   = require('browser-sync'),        // *browser-sync (для автообновления страниц)
+    sourcemaps    = require('gulp-sourcemaps'),     // *gulp-sourcemaps (для генерации sourcemap)
     concat        = require('gulp-concat'),         // *gulp-concat (для конкатенации файлов)
     uglify        = require('gulp-uglify'),         // *gulp-uglify (для минификации js)
     cleanCss      = require('gulp-clean-css'),      // *gulp-clean-css (для минификации css)
@@ -37,8 +38,10 @@ gulp.task('browser-sync', function () {
     * 1. создание таска 'scripts'
     * 2. исходная директория (all files.js)
     * 3. конкатенация files.js -> script.min.js
-    * 4. минификация файла script.min.js
-    * 5. выгрузка файла script.min.js в 'dist/js'
+    * 4. инициализация sourcemap 
+    * 5. минификация файла script.min.js
+    * 6. запись sourcemap в конец файла script.min.js
+    * 7. выгрузка файла script.min.js в 'dist/js'
  */
 
 gulp.task('scripts', function () {
@@ -47,7 +50,9 @@ gulp.task('scripts', function () {
     `${PATHS.src}/scripts/*.js`,
   ])
     .pipe(concat('script.min.js'))
+    // .pipe(sourcemaps.init())
     .pipe(uglify())
+    // .pipe(sourcemaps.write())
     .pipe(gulp.dest(`${PATHS.dist}/js`))
     .pipe(browserSync.reload({ stream: true }))
 })
@@ -58,21 +63,25 @@ gulp.task('scripts', function () {
     * 1. создание таска 'styles'
     * 2. исходная директория (all files.sass)
     * 3. конкатенация files.sass -> style.min.sass
-    * 4. транспиляция style.min.sass -> style.min.css
-    * 5. расстановка префиксов в style.min.css
-    * 6. минификация файла style.min.css
-    * 7. выгрузка файла style.min.css в 'dist/css'
+    * 4. инициализация sourcemap
+    * 5. транспиляция style.min.sass -> style.min.css
+    * 6. расстановка префиксов в style.min.css
+    * 7. минификация файла style.min.css
+    * 8. запись sourcemap в конец файла script.min.js
+    * 9. выгрузка файла style.min.css в 'dist/css'
  */
 
 gulp.task('styles', function () {
   return gulp.src(`${PATHS.src}/styles/**/*.sass`)
     .pipe(concat('style.min.sass'))
+    // .pipe(sourcemaps.init())
     .pipe(sass())
     .pipe(autoprefixer({
       overrideBrowserslist: ['last 10 versions'],
       cascade: false
     }))
     .pipe(cleanCss())
+    // .pipe(sourcemaps.write())
     .pipe(gulp.dest(`${PATHS.dist}/css`))
     .pipe(browserSync.reload({ stream: true }))
 })
@@ -100,7 +109,7 @@ gulp.task('images', function () {
     .pipe(cache(imagemin([
       imagemin.gifsicle({ interlaced: true }),
       imagemin.jpegtran({ progressive: true }),
-      imagemin.optipng({ optimizationLevel: 3 })
+      // imagemin.optipng({ optimizationLevel: 3 })
     ])))
     .pipe(gulp.dest(`${PATHS.dist}/img`))
 })

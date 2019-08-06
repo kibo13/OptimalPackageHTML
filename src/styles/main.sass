@@ -1,43 +1,6 @@
-@import 'fonts'
-@import 'vars'
+@import 'utils/fonts'
+@import 'utils/vars'
+@import 'utils/global'
+@import 'utils/grid'
 
-*
-	box-sizing: border-box
-	padding: 0
-	margin: 0
-
-body
-	font-family: $mainFont
-
-a 
-  text-decoration: none
-
-.intro 
-		position: absolute
-		top: 40%
-		left: 50%
-		transform: translate(-50%, -40%)
-
-		display: flex
-		flex-direction: column
-		align-items: center
-		
-		text-align: center
-		
-		&__img 
-			width: 200px
-			height: 200px
-		
-		&__title
-			margin-top: 15px
-			font-size: 20px
-		
-		&__descrip,
-		&__author
-			margin-top: 12px
-			font-family: monospace
-			font-size: 12px
-
-		&__author
-			margin-top: 3px
-
+@import 'components/intro'
