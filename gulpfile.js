@@ -3,7 +3,7 @@ var gulp          = require('gulp'),
     browserSync   = require('browser-sync'),        // *browser-sync (для автообновления страниц)
     sourcemaps    = require('gulp-sourcemaps'),     // *gulp-sourcemaps (для генерации sourcemap)
     concat        = require('gulp-concat'),         // *gulp-concat (для конкатенации файлов)
-    uglify        = require('gulp-uglify'),         // *gulp-uglify (для минификации js)
+    terser        = require('gulp-terser'),         // *gulp-terser (для минификации js)
     cleanCss      = require('gulp-clean-css'),      // *gulp-clean-css (для минификации css)
     autoprefixer  = require('gulp-autoprefixer'),   // *gulp-autoprefixer (для расстановки префиксов)
     imagemin      = require('gulp-imagemin'),       // *gulp-imagemin (для минификации изображений)
@@ -51,7 +51,7 @@ gulp.task('scripts', function () {
   ])
     .pipe(concat('script.min.js'))
     // .pipe(sourcemaps.init())
-    .pipe(uglify())
+    .pipe(terser())
     // .pipe(sourcemaps.write())
     .pipe(gulp.dest(`${PATHS.dist}/js`))
     .pipe(browserSync.reload({ stream: true }))
@@ -107,8 +107,8 @@ gulp.task('html', function () {
 gulp.task('images', function () {
   return gulp.src(`${PATHS.src}/images/**/*.{png,jpg,jpeg,gif,ico}`)
     .pipe(cache(imagemin([
-      imagemin.gifsicle({ interlaced: true }),
-      imagemin.jpegtran({ progressive: true }),
+      // imagemin.gifsicle({ interlaced: true }),
+      // imagemin.jpegtran({ progressive: true }),
       // imagemin.optipng({ optimizationLevel: 3 })
     ])))
     .pipe(gulp.dest(`${PATHS.dist}/img`))
