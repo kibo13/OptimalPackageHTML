@@ -31,9 +31,11 @@ gulp
 ## Project structure:
 
 * `src/index.html` - main <strong><em>html</em></strong>
-* `src/index.html` - main <strong><em>html</em></strong>
+* `src/styles/main.sass` - main <strong><em>sass</em></strong>
+* `src/styles/libs` - put all libs styles here
+* `src/styles/utils` - put all utils styles here
+* `src/styles/components` - put all components styles here
+* `src/styles/modules` - put all modules styles here
 * `src/scripts` - put all custom <strong><em>scripts</em></strong> here
-* `src/styles/main.sass` - put all custom <strong><em>sass</em></strong> styles here
-* `src/styles/_vars.scss` - put all sass <strong><em>vars</em></strong> here
-* `src/styles/_fonts.scss` - put all <strong><em>fonts</em></strong> here
+* `src/fonts` - put all <strong><em>fonts</em></strong> here
 * `src/images` - put all <strong><em>images</em></strong> here
