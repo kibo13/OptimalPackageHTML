@@ -21,7 +21,7 @@
 git clone https://github.com/kibo13/OptimalPackageHTML
 
 # install node modules:
-npm install
+npm install (npm i)
 
 # run build:
 gulp
@@ -30,6 +30,7 @@ gulp
 
 ## Project structure:
 
+* `src/index.html` - main <strong><em>html</em></strong>
 * `src/index.html` - main <strong><em>html</em></strong>
 * `src/scripts` - put all custom <strong><em>scripts</em></strong> here
 * `src/styles/main.sass` - put all custom <strong><em>sass</em></strong> styles here
