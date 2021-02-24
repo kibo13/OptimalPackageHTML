@@ -1,17 +1,17 @@
 const { src, dest, parallel, series, watch } = require('gulp')
 const concat = require('gulp-concat')
-const rename = require("gulp-rename");
-const uglify = require('gulp-uglify-es').default
+const htmlmin = require('gulp-htmlmin');
 const sass = require('gulp-sass')
-const autoprefixer = require('gulp-autoprefixer')
 const gcmq = require('gulp-group-css-media-queries');
+const autoprefixer = require('gulp-autoprefixer')
 const cleanCSS = require('gulp-clean-css')
+const uglify = require('gulp-uglify-es').default
 const imagemin = require('gulp-imagemin')
 const browserSync = require('browser-sync').create()
 const del = require('del')
 const path = require('./static/paths')
 
-function liveServer() {
+function serve() {
   browserSync.init({
     server: { baseDir: path.dist },
     notify: false,
@@ -20,13 +20,15 @@ function liveServer() {
 
 function template() {
   return src(path.dev.template)
+    .pipe(htmlmin({ collapseWhitespace: true }))
     .pipe(dest(path.build.template))
     .pipe(browserSync.stream())
 }
 
 function styles() {
   return src(path.dev.styles)
-    .pipe(sass())
+    .pipe(sass({ includePaths: ['node_modules'] }))
+    .pipe(concat('main.min.css'))
     .pipe(gcmq())
     .pipe(
       autoprefixer({
@@ -34,7 +36,6 @@ function styles() {
         grid: true,
       })
     )
-    .pipe(rename({ extname: '.min.css' }))
     .pipe(cleanCSS())
     .pipe(dest(path.build.styles))
     .pipe(browserSync.stream())
@@ -42,22 +43,22 @@ function styles() {
 
 function scripts() {
   return src(path.dev.scripts)
+    .pipe(concat('main.min.js'))
     .pipe(uglify())
-    .pipe(rename({ extname: '.min.js' }))
     .pipe(dest(path.build.scripts))
     .pipe(browserSync.stream())
 }
 
 function images() {
   return src(path.dev.images)
-    .pipe(imagemin({
-      progressive: true,
-      svgoPlugins: [{ removeViewBox: false }],
-      interlaced: true,
-      optimizationLevel: 3
-    }))
+    .pipe(imagemin())
     .pipe(dest(path.build.images))
     .pipe(browserSync.stream())
+}
+
+function fonts() {
+  return src(path.dev.fonts)
+    .pipe(dest(path.build.fonts))
 }
 
 function watching() {
@@ -68,14 +69,10 @@ function watching() {
 }
 
 function clean() {
-  return del.sync(path.dist)
+  return del(path.dist)
 }
 
-exports.clean = clean
-exports.template = template
-exports.styles = styles
-exports.scripts = scripts
-exports.images = images
+const files = parallel(template, styles, scripts, images, fonts)
 
-exports.build = series(clean, template, styles, scripts, images)
-exports.default = parallel(clean, template, styles, scripts, images, liveServer, watching)
+exports.build = series(clean, files)
+exports.serve = series(clean, files, serve, watching)

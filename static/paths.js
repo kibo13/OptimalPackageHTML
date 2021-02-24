@@ -4,15 +4,16 @@ const dist = 'dist';
 const dev = {
   template: src + '/*.html',
   styles: src + '/styles/main.sass',
-  scripts: src + '/scripts/*.js',
+  scripts: src + '/scripts/**/*.js',
   images: src + '/images/**/*.{png,jpg,jpeg,gif,ico,svg,webp}',
-  fonts: src + '/fonts/*.ttf',
+  fonts: src + '/fonts/**/*',
 };
 
 const watch = {
   template: src + '/**/*.html',
   styles: src + '/styles/**/*.sass',
-  scripts: [src + '/scripts/**/*.js', '!' + src + '/scripts/**/*.min.js'],
+  // scripts: [src + '/scripts/**/*.js', '!' + src + '/scripts/**/*.min.js'],
+  scripts: src + '/scripts/**/*.js',
   images: src + '/images/**/*.{png,jpg,jpeg,gif,ico,svg,webp}',
 };
 
