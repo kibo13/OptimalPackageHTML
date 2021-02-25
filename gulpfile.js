@@ -11,13 +11,6 @@ const browserSync = require('browser-sync').create()
 const del = require('del')
 const path = require('./static/paths')
 
-function serve() {
-  browserSync.init({
-    server: { baseDir: path.dist },
-    notify: false,
-  })
-}
-
 function template() {
   return src(path.dev.template)
     .pipe(htmlmin({ collapseWhitespace: true }))
@@ -27,7 +20,7 @@ function template() {
 
 function styles() {
   return src(path.dev.styles)
-    .pipe(sass({ includePaths: ['node_modules'] }))
+    .pipe(sass())
     .pipe(concat('main.min.css'))
     .pipe(gcmq())
     .pipe(
@@ -61,7 +54,12 @@ function fonts() {
     .pipe(dest(path.build.fonts))
 }
 
-function watching() {
+function serve() {
+  browserSync.init({
+    server: { baseDir: path.dist },
+    notify: false,
+  })
+
   watch(path.watch.template, template)
   watch(path.watch.styles, styles)
   watch(path.watch.scripts, scripts)
@@ -75,4 +73,4 @@ function clean() {
 const files = parallel(template, styles, scripts, images, fonts)
 
 exports.build = series(clean, files)
-exports.serve = series(clean, files, serve, watching)
+exports.serve = series(clean, files, serve)

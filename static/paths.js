@@ -12,7 +12,6 @@ const dev = {
 const watch = {
   template: src + '/**/*.html',
   styles: src + '/styles/**/*.sass',
-  // scripts: [src + '/scripts/**/*.js', '!' + src + '/scripts/**/*.min.js'],
   scripts: src + '/scripts/**/*.js',
   images: src + '/images/**/*.{png,jpg,jpeg,gif,ico,svg,webp}',
 };
