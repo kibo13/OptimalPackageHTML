@@ -1,5 +1,6 @@
 const { src, dest, parallel, series, watch } = require('gulp')
 const concat = require('gulp-concat')
+const fileinclude = require('gulp-file-include');
 const htmlmin = require('gulp-htmlmin');
 const sass = require('gulp-sass')
 const gcmq = require('gulp-group-css-media-queries');
@@ -11,10 +12,11 @@ const browserSync = require('browser-sync').create()
 const del = require('del')
 const path = require('./static/paths')
 
-function template() {
-  return src(path.dev.template)
+function templates() {
+  return src(path.dev.templates)
+    .pipe(fileinclude())
     .pipe(htmlmin({ collapseWhitespace: true }))
-    .pipe(dest(path.build.template))
+    .pipe(dest(path.build.templates))
     .pipe(browserSync.stream())
 }
 
@@ -49,6 +51,13 @@ function images() {
     .pipe(browserSync.stream())
 }
 
+function icons() {
+  return src(path.dev.icons)
+    .pipe(imagemin())
+    .pipe(dest(path.build.icons))
+    .pipe(browserSync.stream())
+}
+
 function fonts() {
   return src(path.dev.fonts)
     .pipe(dest(path.build.fonts))
@@ -60,17 +69,18 @@ function serve() {
     notify: false,
   })
 
-  watch(path.watch.template, template)
+  watch(path.watch.templates, templates)
   watch(path.watch.styles, styles)
   watch(path.watch.scripts, scripts)
   watch(path.watch.images, images)
+  watch(path.watch.icons, icons)
 }
 
 function clean() {
   return del(path.dist)
 }
 
-const files = parallel(template, styles, scripts, images, fonts)
+const files = parallel(templates, styles, scripts, images, icons, fonts)
 
 exports.build = series(clean, files)
 exports.serve = series(clean, files, serve)

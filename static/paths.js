@@ -2,26 +2,29 @@ const src = 'src';
 const dist = 'dist';
 
 const dev = {
-  template: src + '/*.html',
-  styles: src + '/styles/main.sass',
-  scripts: src + '/scripts/**/*.js',
-  images: src + '/images/**/*.{png,jpg,jpeg,gif,ico,svg,webp}',
-  fonts: src + '/fonts/**/*',
+  templates: src + '/*.html',
+  styles: src + '/*.sass',
+  scripts: src + '/**/*.js',
+  images: src + '/assets/images/**/*.{png,jpg,jpeg,webp}',
+  icons: src + '/assets/icons/**/*.{png,ico,svg}',
+  fonts: src + '/assets/fonts/**/*',
 };
 
 const watch = {
-  template: src + '/**/*.html',
-  styles: src + '/styles/**/*.sass',
-  scripts: src + '/scripts/**/*.js',
-  images: src + '/images/**/*.{png,jpg,jpeg,gif,ico,svg,webp}',
+  templates: src + '/**/*.html',
+  styles: src + '/**/*.sass',
+  scripts: src + '/**/*.js',
+  images: src + '/assets/images/**/*.{png,jpg,jpeg,webp}',
+  icons: src + '/assets/icons/**/*.{png,ico,svg}'
 };
 
 const build = {
-  template: dist,
+  templates: dist,
   styles: dist + '/styles',
   scripts: dist + '/scripts',
-  images: dist + '/images',
-  fonts: dist + '/fonts',
+  images: dist + '/assets/images',
+  icons: dist + '/assets/icons',
+  fonts: dist + '/assets/fonts',
 };
 
 exports.src = src;
