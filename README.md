@@ -36,15 +36,14 @@ gulp build
   - `/fonts`
   - `/icons`
   - `/images`
-- `/helpers`
-  - `fonts.sass`
-  - `global.sass`
-  - `vars.sass`
-- `/pages`
-  - `/Hero`
-    - `index.html`
-    - `index.js`
-    - `index.sass`
+- `/styles`
+- `/scripts`
+- `/layouts`
+  - `default.html`
+- `/partials`
+
+  - `head.html`
+  - `header.html`
+  - `footer.html`
+
 - `index.html`
-- `main.js`
-- `main.sass`

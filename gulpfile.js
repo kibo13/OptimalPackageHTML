@@ -1,9 +1,9 @@
 const { src, dest, parallel, series, watch } = require('gulp')
 const concat = require('gulp-concat')
-const fileinclude = require('gulp-file-include');
-const htmlmin = require('gulp-htmlmin');
+const htmlmin = require('gulp-htmlmin')
+const panini = require("panini")
 const sass = require('gulp-sass')
-const gcmq = require('gulp-group-css-media-queries');
+const gcmq = require('gulp-group-css-media-queries')
 const autoprefixer = require('gulp-autoprefixer')
 const cleanCSS = require('gulp-clean-css')
 const uglify = require('gulp-uglify-es').default
@@ -13,8 +13,13 @@ const del = require('del')
 const path = require('./static/paths')
 
 function templates() {
+  panini.refresh();
   return src(path.dev.templates)
-    .pipe(fileinclude())
+    .pipe(panini({
+      root: path.panini.root,
+      layouts: path.panini.layouts,
+      partials: path.panini.partials
+    }))
     .pipe(htmlmin({ collapseWhitespace: true }))
     .pipe(dest(path.build.templates))
     .pipe(browserSync.stream())

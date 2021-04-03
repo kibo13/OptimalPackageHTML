@@ -1,14 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>OptimalPackageHTML</title>
-    <link rel="stylesheet" href="styles/main.min.css" />
-  </head>
-  <body>
-    @@include('pages/Hero/index.html')
-    <script src="scripts/main.min.js"></script>
-  </body>
-</html>
+---
+layout: default
+title: Home
+---
+
+<div class="hero">
+  <img class="hero__img" src="assets/images/gulp.png" alt="gulp" />
+  <h1 class="hero__title">OptimalPackageHTML</h1>
+  <p class="hero__descrip">The current build is designed for websites layout</p>
+  <p class="hero__author">
+    Author:
+    <a class="hero__link" href="https://github.com/kibo13" target="_blank">
+      Boris Kim
+    </a>
+  </p>
+</div>
